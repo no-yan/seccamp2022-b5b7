@@ -1,8 +1,9 @@
-name: Build an image with the signature
+name: Build an image with signature
 
 on:
-  push:
-    branches: [main]
+ push:
+   branches:
+     - "main"
 
 jobs:
   build:
@@ -18,8 +19,7 @@ jobs:
         uses: docker/login-action@v1
         with:
           registry: ghcr.io
-          # Suppose that your repository is located at https://github.com/<X>/<Y>, this value should be equal to X
-          username: lmt-swallow
+          username: no-yan
           password: ${{ github.token }}
 
       # TODO: add cosign-installer etc.
@@ -27,7 +27,6 @@ jobs:
       - name: Prepare Dockerfile
         run: |
           echo "FROM alpine:3.10" > Dockerfile
-
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
@@ -35,6 +34,6 @@ jobs:
           file: ./Dockerfile
           # Suppose that your repository is located at https://github.com/<X>/<Y>, this value should be equal to ghcr.io/<X>/<random value>:latest
           tags: |
-            ghcr.io/lmt-swallow/test-image:latest
+            ghcr.io/no-yan/test-image:latest
           platforms: linux/amd64
           push: true
